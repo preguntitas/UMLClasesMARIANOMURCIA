@@ -5,43 +5,13 @@ Event <|-- BoardMeeting
 Person <|-- Member
 Member <|-- BoardMember
 
-AAUOC o-- Location
-AAUOC o-- Person
-AAUOC o-- Event
+AAUOC o-- "0..*" Location
+AAUOC o-- "0..*" Person
+AAUOC o-- "0..*" Event
 
-Location -- Event : isLocated In
-Event -- Member : attendsTo
-BoardMeeting -- BoardMember : attendsTo
-Conference -- Person : attendsTo
+Location "1" -- "0..*" Event : isLocated In
+Event "0..*" -- "0..*" Member : attendsTo
+BoardMeeting "0..*" -- "0..*" BoardMember : attendsTo
+Conference "0..*" -- "0..*" Person : attendsTo
 
-Class AAUOC {
-    newLocation(l : Location):void
-    newEvent(e : Event) : void
-    newPerson(p : Person) : void
-    informEvent(e : Event) : void
-    register(m : Member,e : Event) : void
-}
-
-Class Location {
-    description : String
-    address : String
-}
-
-Class Event {
-    date : Date
-    description : String
-    assign(l : Location) : void
-}
-
-Class Person {
-    name : String
-}
-
-Class Member {
-    e-mail : String
-}
-
-Class Conference {
-    max_attendees : Integer
-}
 @enduml
