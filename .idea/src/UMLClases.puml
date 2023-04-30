@@ -1,11 +1,47 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+Event <|-- Conference
+Event <|-- BoardMeeting
 
-autonumber
+Person <|-- Member
+Member <|-- BoardMember
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+AAUOC o-- Location
+AAUOC o-- Person
+AAUOC o-- Event
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+Location -- Event : isLocated In
+Event -- Member : attendsTo
+BoardMeeting -- BoardMember : attendsTo
+Conference -- Person : attendsTo
+
+Class AAUOC {
+    newLocation(l : Location):void
+    newEvent(e : Event) : void
+    newPerson(p : Person) : void
+    informEvent(e : Event) : void
+    register(m : Member,e : Event) : void
+}
+
+Class Location {
+    description : String
+    address : String
+}
+
+Class Event {
+    date : Date
+    description : String
+    assign(l : Location) : void
+}
+
+Class Person {
+    name : String
+}
+
+Class Member {
+    e-mail : String
+}
+
+Class Conference {
+    max_attendees : Integer
+}
 @enduml
